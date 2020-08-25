@@ -1,0 +1,38 @@
+[flake8]
+# B - enable bugbear warnings.
+# BLK - enable flake8-black warnings.
+# B9 - is required for Bugbear's more opinionated warnings.
+# C - violentions reported by mccabe (check code complexity).
+# F - erros reported by pyflakes.
+# I - enable flake8-import-order warnings.
+# S - enable bandit warnings.
+# W and E - warning and erros reported by pycodestyle (PEP8).
+select = B,BLK,B9,C,E,F,I,S,W
+max-line-length = 88
+max-complexity = 10
+
+# flake8-import-order
+application-import-names = heatfile, tests
+import-order-style = google
+
+# E501: line too long
+# E203: Whitespace before ':'
+# W503: Line break occurred before a binary operator
+# D202: No blank lines allowed after function docstring
+# W504: line break after binary operator
+ignore =
+    E501,
+    E203,
+    W503,
+    D202,
+    W504
+per-file-ignores = tests/*:S101
+exclude =
+    .git
+    __pycache__
+    .venv
+    .mypy_cache
+    .pytest_cache
+    .vscode
+    .idea
+    .github

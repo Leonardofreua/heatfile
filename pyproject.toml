@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "HeatFile"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+homepage = "https://github.com/Leonardofreua/heatfile"
+repository = "https://github.com/Leonardofreua/heatfile"
+authors = ["Leonardo Freua <leonardo.batista.freua@gmail.com>"]
+keywords = ["heatfile", "file_scan", "tree"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+click = "^7.1.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+flake8 = "^3.8.3"
+flake8-black = "^0.2.1"
+flake8-import-order = "^0.18.1"
+flake8-bugbear = "^20.1.4"
+flake8-bandit = "^2.1.2"
+safety = "^1.9.0"
+mypy = "^0.782"
+black = {version = "^19.10b0", allow-prereleases = true}
+
+[tool.poetry.scripts]
+heatfile = "heatfile.console:start"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
