@@ -19,15 +19,6 @@ class Tree:
         self.is_last = is_last
         self.search_string = search_string
 
-    @staticmethod
-    def __find_string_incidences(file_path, search_string):
-        pattern = compile(search_string, flags=IGNORECASE)
-
-        with open(file_path, "r", encoding="latin-1") as file:
-            content = file.read()
-            if search(pattern, content) is not None:
-                return len(findall(pattern, content))
-
     @classmethod
     def make_tree(cls, root, parent=None, is_last=False, search_string=None):
         root = Path(str(root))
@@ -85,6 +76,15 @@ class Tree:
                     cls.__files_count += 1
                     yield cls(path, displayable_root, is_last, search_string)
             directory_index += 1
+
+    @staticmethod
+    def __find_string_incidences(file_path, search_string):
+        pattern = compile(search_string, flags=IGNORECASE)
+
+        with open(file_path, "r", encoding="latin-1") as file:
+            content = file.read()
+            if search(pattern, content) is not None:
+                return len(findall(pattern, content))
 
     @property
     def display_name(self):
