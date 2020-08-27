@@ -6,7 +6,7 @@ from click_help_colors import HelpColorsGroup
 
 from heatfile.__version__ import __version__
 from heatfile.alerts import Alert
-from heatfile.tree import Tree
+from .commands.tree import Tree
 
 
 @click.group(cls=HelpColorsGroup, help_headers_color="green", help_options_color="blue")
