@@ -23,6 +23,8 @@ flake8-bandit = "^2.1.2"
 safety = "^1.9.0"
 mypy = "^0.782"
 black = {version = "^19.10b0", allow-prereleases = true}
+pre-commit = "^2.7.1"
+nox = "^2020.8.22"
 
 [tool.poetry.scripts]
 heatfile = "heatfile.console:main"
