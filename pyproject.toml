@@ -11,6 +11,7 @@ keywords = ["heatfile", "file_scan", "tree"]
 [tool.poetry.dependencies]
 python = "^3.7"
 click = "^7.1.2"
+click-help-colors = "^0.8"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

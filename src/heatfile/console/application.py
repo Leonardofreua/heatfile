@@ -1,13 +1,15 @@
 from pathlib import Path
 
 import click
+from click_help_colors import HelpColorsGroup
+
 
 from heatfile.__version__ import __version__
 from heatfile.alerts import Alert
 from heatfile.tree import Tree
 
 
-@click.group()
+@click.group(cls=HelpColorsGroup, help_headers_color="green", help_options_color="blue")
 @click.version_option(version=__version__, help="Display current version")
 @click.help_option("--help", "-H", help="Display list of commands and informations")
 def cli() -> None:
