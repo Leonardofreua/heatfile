@@ -2,8 +2,8 @@ from pathlib import Path
 
 import click
 
-from . import __version__
-from .tree import Tree
+from heatfile.__version__ import __version__
+from heatfile.tree import Tree
 
 
 @click.group()
@@ -26,7 +26,3 @@ def tree(path: Path, search: str) -> None:
             print("Type tree -H for help")
         elif not Path(path).is_dir():
             print("Error: The path should be a directory")
-
-
-def run() -> None:
-    cli()
