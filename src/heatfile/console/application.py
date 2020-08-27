@@ -3,6 +3,7 @@ from pathlib import Path
 import click
 
 from heatfile.__version__ import __version__
+from heatfile.alerts import Alert
 from heatfile.tree import Tree
 
 
@@ -22,7 +23,8 @@ def tree(path: Path, search: str) -> None:
         Tree.build_tree(path, search)
     except Exception:
         if path is None and not search:
-            print("Error: None of the avaible options have been specified.")
-            print("Type tree -H for help")
+            Alert.error_message("None of the avaible options have been specified.")
         elif not Path(path).is_dir():
-            print("Error: The path should be a directory")
+            Alert.error_message("The path should be a directory")
+
+        Alert.help_message()
