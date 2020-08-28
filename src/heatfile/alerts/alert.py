@@ -8,23 +8,23 @@ class Alert:
     __SUCCESS = "SUCCESS"
 
     @classmethod
-    def info_message(cls, message, bold=False):
+    def info_message(cls, message: str, bold: bool = False) -> None:
         click.secho(f"[{cls.__INFO}]: {message}", fg="blue", bold=bold)
 
     @classmethod
-    def error_message(cls, message):
+    def error_message(cls, message: str) -> None:
         click.secho(f"[{cls.__ERROR}]: {message}", fg="red", bold=True)
 
     @classmethod
-    def warning_message(cls, message, bold=False):
+    def warning_message(cls, message: str, bold: bool = False) -> None:
         click.secho(f"[{cls.__WARNING}]: {message}", fg="yellow", bold=bold)
 
     @classmethod
-    def success_message(cls, message, bold=False):
+    def success_message(cls, message: str, bold: bool = False) -> None:
         click.secho(f"[{cls.__SUCCESS}]: {message}", fg="green", bold=bold)
 
     @classmethod
-    def help_message(cls, bold=False):
+    def help_message(cls, bold: bool = False) -> None:
         context = click.get_current_context()
         click.secho(
             f"\nType {context.command.name} -H for help.", fg="white", bold=bold

@@ -25,6 +25,10 @@ mypy = "^0.782"
 black = {version = "^19.10b0", allow-prereleases = true}
 pre-commit = "^2.7.1"
 nox = "^2020.8.22"
+pytype = {version = "^2020.8.17", python = "3.7"}
+typeguard = "^2.9.1"
+pytest-mock = "^3.3.1"
+flake8-annotations = "^2.3.0"
 
 [tool.poetry.scripts]
 heatfile = "heatfile.console:main"

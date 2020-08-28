@@ -1,4 +1,5 @@
 [flake8]
+# ANN - enable flake8-annotations warnings.
 # B - enable bugbear warnings.
 # BLK - enable flake8-black warnings.
 # B9 - is required for Bugbear's more opinionated warnings.
@@ -7,7 +8,7 @@
 # I - enable flake8-import-order warnings.
 # S - enable bandit warnings.
 # W and E - warning and erros reported by pycodestyle (PEP8).
-select = B,BLK,B9,C,E,F,I,S,W
+select = ANN,B,BLK,B9,C,E,F,I,S,W
 max-line-length = 88
 max-complexity = 10
 
@@ -20,13 +21,19 @@ import-order-style = google
 # W503: Line break occurred before a binary operator
 # D202: No blank lines allowed after function docstring
 # W504: line break after binary operator
+# ANN101: Missing type annotation for self in method
+# ANN102: Missing type annotation for cls in classmethod
 ignore =
     E501,
     E203,
     W503,
     D202,
-    W504
-per-file-ignores = tests/*:S101
+    W504,
+    ANN101,
+    ANN102
+per-file-ignores =
+    tests/*:S101,ANN
+    noxfile.py:ANN
 exclude =
     .git
     __pycache__

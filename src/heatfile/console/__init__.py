@@ -1,5 +1,5 @@
 from .application import cli
 
 
-def main():
+def main() -> None:
     cli()
