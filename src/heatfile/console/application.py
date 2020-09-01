@@ -1,8 +1,9 @@
+from os import getcwd
 from pathlib import Path
+from typing import Optional, Union
 
 import click
 from click_help_colors import HelpColorsGroup
-
 
 from heatfile.__version__ import __version__
 from heatfile.alerts import Alert
@@ -18,15 +19,17 @@ def cli() -> None:
 
 @cli.command(help="Display in Tree structure")
 @click.help_option("--help", "-H", help="Display list of commands and informations")
-@click.option("--path", "-P", type=click.Path(), help="Directory path")
+@click.option(
+    "--path", "-P", type=click.Path(), default=getcwd(), help="Directory path"
+)
 @click.option("--search", "-S", type=click.STRING, help="Search string")
-def tree(path: Path, search: str) -> None:
+def tree(path, search=None):  # type: (Path, Union[Optional[str], None]) -> None
     try:
-        Tree.build_tree(path, search)
+        Tree.build_tree(Path(path), search)
     except Exception:
-        if path is None and not search:
-            Alert.error_message("None of the avaible options have been specified.")
-        elif not Path(path).is_dir():
-            Alert.error_message("The path should be a directory")
+        if Path(path).is_file() and search is None:
+            Alert.error_message(
+                "Provide a string to find references in the given file."
+            )
 
         Alert.help_message()

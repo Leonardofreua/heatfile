@@ -10,7 +10,7 @@
 # W and E - warning and erros reported by pycodestyle (PEP8).
 select = ANN,B,BLK,B9,C,E,F,I,S,W
 max-line-length = 88
-max-complexity = 10
+max-complexity = 15
 
 # flake8-import-order
 application-import-names = heatfile, tests
