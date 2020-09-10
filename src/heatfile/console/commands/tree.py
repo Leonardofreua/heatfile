@@ -14,6 +14,8 @@ class Tree:
     __string_references = 0
     __found_directories = {}  # type: Dict[object, bool]
 
+    __slots__ = ["path", "parent_path", "is_last", "search_string"]
+
     def __init__(
         self, path, parent_path=None, is_last=False, search_string=None,
     ):  # type: (Path, "Tree", bool, str) -> None
