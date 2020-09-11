@@ -4,34 +4,12 @@ from unittest.mock import Mock
 
 from click import ClickException
 from click.testing import CliRunner
-import pytest
-from pytest_mock import MockFixture
 
 from heatfile.console import application
-
 
 PATH = Path("/home")
 FILE = Path("tree.py")
 SEARCH_STRING = "string_reference"
-
-
-@pytest.fixture
-def mock_tree_build_tree(mocker: MockFixture) -> Mock:
-    """Fixture for mocking Tree.build_tree."""
-    return mocker.patch("heatfile.console.commands.tree.Tree.build_tree", autospec=True)
-
-
-def test_main_succeeds(runner: CliRunner, mock_tree_build_tree: Mock) -> None:
-    """It exits with a status code of zero."""
-    result = runner.invoke(application.cli)
-    assert result.exit_code == 0
-
-
-@pytest.mark.e2e
-def test_cli_succeeds_in_production_env(runner: CliRunner) -> None:
-    """It exits with a status code of zero (end-to-end)."""
-    result = runner.invoke(application.cli)
-    assert result.exit_code == 0
 
 
 def test_invokes_build_tree_method(

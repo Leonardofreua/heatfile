@@ -41,6 +41,9 @@ source = ["src", "*/site-packages"]
 [tool.coverage.run]
 branch = true
 source = ["heatfile"]
+omit = ["*/__init__.py",
+        "*/__version__.py",
+        "*/__main__.py"]
 
 [tool.coverage.report]
 show_missing = true
