@@ -20,16 +20,25 @@ def cli() -> None:
 @cli.command(help="Display in Tree structure")
 @click.help_option("--help", "-H", help="Display list of commands and informations")
 @click.option(
-    "--path", "-P", type=click.Path(), default=getcwd(), help="Directory path"
+    "--path",
+    "-P",
+    type=click.Path(),
+    default=getcwd(),
+    show_default=True,
+    help="Directory path",
 )
-@click.option("--search", "-S", type=click.STRING, help="Search string")
-def tree(path, search=None):  # type: (Path, Union[Optional[str], None]) -> None
-    try:
-        Tree.build_tree(Path(path), search)
-    except Exception:
-        if Path(path).is_file() and search is None:
-            Alert.error_message(
-                "Provide a string to find references in the given file."
-            )
+@click.option(
+    "--search",
+    "-S",
+    type=click.STRING,
+    default=None,
+    show_default=True,
+    help="Search string",
+)
+def tree(path, search):  # type: (Path, Union[Optional[str], None]) -> None
+    if Path(path).is_file() and search is None:
+        Alert.raise_error_message(
+            "Provide a string to find references in the given file."
+        )
 
-        Alert.help_message()
+    Tree.build_tree(Path(path), search)

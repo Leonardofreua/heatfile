@@ -1,19 +1,27 @@
+from sys import platform
+
 import click
+from colorama import Fore, init, Style
+
+
+if platform == "win":
+    init()
 
 
 class Alert:
     __INFO = "INFO"
-    __ERROR = "ERROR"
     __WARNING = "WARNING"
     __SUCCESS = "SUCCESS"
 
     @classmethod
-    def info_message(cls, message: str, bold: bool = False) -> None:
-        click.secho(f"[{cls.__INFO}]: {message}", fg="blue", bold=bold)
+    def raise_error_message(cls, message: str) -> None:
+        message = f"{Style.BRIGHT + Fore.RED}{message}"
+        cls.help_message()
+        raise click.ClickException(message)
 
     @classmethod
-    def error_message(cls, message: str) -> None:
-        click.secho(f"[{cls.__ERROR}]: {message}", fg="red", bold=True)
+    def info_message(cls, message: str, bold: bool = False) -> None:
+        click.secho(f"[{cls.__INFO}]: {message}", fg="blue", bold=bold)
 
     @classmethod
     def warning_message(cls, message: str, bold: bool = False) -> None:
@@ -27,5 +35,5 @@ class Alert:
     def help_message(cls, bold: bool = False) -> None:
         context = click.get_current_context()
         click.secho(
-            f"\nType {context.command.name} -H for help.", fg="white", bold=bold
+            f"\nType {context.command.name} -H for help.\n", fg="white", bold=bold
         )
