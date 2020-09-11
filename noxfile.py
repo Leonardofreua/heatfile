@@ -5,7 +5,7 @@ import nox
 from nox.sessions import Session
 
 package = "heatfile"
-nox.options.sessions = "lint", "safety", "mypy", "pytype"
+nox.options.sessions = "lint", "safety", "mypy", "pytype", "tests"
 locations = "src", "tests", "noxfile.py"
 
 
@@ -99,3 +99,14 @@ def typeguard(session: Session) -> None:
     session.run("poetry", "install", "--no-dev", external=True)
     install_with_constraints(session, "pytest", "pytest", "pytest-mock", "typeguard")
     session.run("pytest", f"--typeguard-packages={package}", *args)
+
+
+@nox.session(python=["3.8", "3.7"])
+def tests(session: Session) -> None:
+    """Run the test suite."""
+    args = session.posargs or ["--cov", "-m", "not e2e"]
+    session.run("poetry", "install", "--no-dev", external=True)
+    install_with_constraints(
+        session, "coverage[toml]", "pytest", "pytest-cov", "pytest-mock"
+    )
+    session.run("pytest", *args)
