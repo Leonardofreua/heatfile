@@ -40,5 +40,7 @@ def tree(path, search):  # type: (Path, Union[Optional[str], None]) -> None
         Alert.raise_error_message(
             "Provide a string to find references in the given file."
         )
+    elif not Path(path).exists():
+        Alert.raise_error_message("Directory/File not found.")
 
     Tree.build_tree(Path(path), search)
