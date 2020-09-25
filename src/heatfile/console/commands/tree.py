@@ -3,7 +3,7 @@ from pathlib import Path
 from re import compile, findall, IGNORECASE, search
 from typing import Dict, Iterator, List, Optional, Union
 
-from heatfile.alerts import Alert
+from heatfile.console.logging.alert import Alert
 
 
 class Tree:
@@ -132,19 +132,22 @@ class Tree:
         return sorted(list(path for path in root.iterdir()))
 
     @staticmethod
-    def _validate_inputs(path, search_string) -> None:
+    def _validate_inputs(
+        path, search_string=None
+    ):  # type: (Path, Union[Optional[str], None]) -> None
+        alert = Alert()
+
+        alert.help()
         if path.is_file() and search_string is None:
-            Alert.raise_error_message(
-                "Provide a string to find references in the given file."
-            )
+            alert.error("Provide a string to find references in the given file.")
         elif not path.exists():
-            Alert.raise_error_message("Directory/File not found.")
+            alert.error("Directory/File not found.")
 
     @property
     def display_name(self) -> str:
         return f"{self.path.name}/" if self.path.is_dir() else self.path.name
 
-    def _displayable(self) -> str:
+    def _mount_tree_line(self) -> str:
         if self.parent_path is None:
             return self.display_name
 
@@ -175,20 +178,21 @@ class Tree:
 
     @classmethod
     def build_tree(
-        cls, path, search_string
+        cls, path, search_string=None
     ):  # type: (Path, Union[Optional[str], None]) -> None
-        cls._validate_inputs(path, search_string)
+        try:
+            if search_string is not None:
+                iterable_paths = cls._make_tree_with_references(path, search_string)
+            elif path.is_dir():
+                iterable_paths = cls._make_only_tree(path)
 
-        iterable_paths: Iterator[Tree] = iter(())
+            for line in iterable_paths:
+                print(line._mount_tree_line())
 
-        if search_string is not None:
-            iterable_paths = cls._make_tree_with_references(path, search_string)
-        elif path.is_dir():
-            iterable_paths = cls._make_only_tree(path=path)
-
-        for line in iterable_paths:
-            print(line._displayable())
-
-        print(
-            f"\n{cls._directories_count} directories" + (f", {cls._files_count} files")
-        )
+            print(
+                f"\n{cls._directories_count} directories"
+                + (f", {cls._files_count} files")
+            )
+        except Exception:
+            cls._validate_inputs(path, search_string)
+            raise SystemExit()
