@@ -13,7 +13,7 @@ from .commands.tree import Tree
 @click.version_option(version=__version__, help="Display current version")
 @click.help_option("--help", "-H", help="Display list of commands and informations")
 def cli() -> None:
-    pass
+    pass  # pragma: no cover
 
 
 @cli.command(help="Display in Tree structure")
