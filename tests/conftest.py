@@ -27,4 +27,23 @@ def mock_tree_build_tree(mocker: MockFixture) -> Mock:
 
 @pytest.fixture
 def mock_current_directory_path() -> Path:
+    """Fixture for mocking current path"""
     return Path(os.getcwd())
+
+
+@pytest.fixture
+def mock_path_with_file() -> Path:
+    """Fixture for mocking a patch with file"""
+    return Path(f"{os.getcwd()}/src/heatfile/console/commands/tree.py")
+
+
+@pytest.fixture
+def mock_non_existent_path() -> Path:
+    """Fixture for mocking a non-existent patch"""
+    return Path("non_existent_path/")
+
+
+@pytest.fixture
+def mock_search_string() -> str:
+    """Fixture for mocking search string"""
+    return "test"
