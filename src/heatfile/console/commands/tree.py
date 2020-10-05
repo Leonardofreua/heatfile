@@ -1,9 +1,15 @@
 from collections import OrderedDict
+import locale
 from pathlib import Path
 from re import compile, findall, IGNORECASE, search
 from typing import Dict, Iterator, List, Optional, Union
 
+from colorama import Fore, init, Style
+
 from heatfile.console.logging.alert import Alert
+
+init(autoreset=True)
+locale.setlocale(locale.LC_ALL, "")
 
 
 class Tree:
@@ -13,6 +19,7 @@ class Tree:
     _parent_prefix_last = "│   "
     _directories_count = 0
     _files_count = 0
+    _total_refs = 0
     _string_references = 0
     _found_directories = {}  # type: Dict[object, bool]
 
@@ -54,6 +61,7 @@ class Tree:
                     path, search_string
                 )
                 if cls._string_references != 0:
+                    cls._total_refs += cls._string_references
                     previous_parents = cls._get_previous_parents(displayable_root)
 
                     if previous_parents is not None:
@@ -143,6 +151,10 @@ class Tree:
         elif not path.exists():
             alert.error("Directory/File not found.")
 
+    @staticmethod
+    def format_counts(counts: int) -> str:
+        return "{0:n}".format(counts)
+
     @property
     def display_name(self) -> str:
         return f"{self.path.name}/" if self.path.is_dir() else self.path.name
@@ -189,9 +201,14 @@ class Tree:
             for line in iterable_paths:
                 print(line._mount_tree_line())
 
+            if search_string is not None:
+                print(
+                    f"\n{Style.BRIGHT + Fore.CYAN}{cls.format_counts(cls._total_refs)} references found."  # noqa: B950
+                )
+
             print(
-                f"\n{cls._directories_count} directories"
-                + (f", {cls._files_count} files")
+                f"\n{cls.format_counts(cls._directories_count)} directories"
+                + f", {cls.format_counts(cls._files_count)} files"
             )
         except Exception:
             cls._validate_inputs(path, search_string)
