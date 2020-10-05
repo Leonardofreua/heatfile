@@ -23,4 +23,4 @@ class Alert:
 
     def help(self) -> None:
         logger.setLevel(logging.INFO)
-        logger.info("Type [COMMAND] -H for help.\n")
+        logger.info("Type [COMMAND] -h for help.\n")

@@ -41,4 +41,4 @@ def test_help_logging(mock_alert_class: Alert, caplog) -> None:
     mock_alert_class.help()
     args, message = caplog.records[0], caplog.messages[0]
     assert args.levelname == "INFO"
-    assert message == "Type [COMMAND] -H for help.\n"
+    assert message == "Type [COMMAND] -h for help.\n"
